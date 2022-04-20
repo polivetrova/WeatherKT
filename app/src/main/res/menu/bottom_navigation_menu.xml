@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/fragmentHome"
+        android:enabled="true"
+        android:icon="@drawable/ic_home"
+        android:orderInCategory="2"
+        android:title="@string/text_label_1" />
+    <item
+        android:id="@+id/fragmentFavourites"
+        android:enabled="true"
+        android:icon="@drawable/ic_favorite"
+        android:orderInCategory="1"
+        android:title="@string/text_label_2" />
+    <item
+        android:id="@+id/fragmentCitiesList"
+        android:enabled="true"
+        android:icon="@drawable/ic_cities_list"
+        android:orderInCategory="3"
+        android:title="@string/text_label_3" />
+
+</menu>

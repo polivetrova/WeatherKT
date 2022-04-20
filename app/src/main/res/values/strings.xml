@@ -3,4 +3,7 @@
     <string name="temperature_label">Температура</string>
     <string name="feels_like_label">Ощущается как</string>
     <string name="city_coordinates">lt/ln: %s, %s"</string>
+    <string name="text_label_1">Home</string>
+    <string name="text_label_2">Favourites</string>
+    <string name="text_label_3">Cities</string>
 </resources>
