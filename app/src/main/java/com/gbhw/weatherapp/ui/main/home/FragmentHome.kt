@@ -1,4 +1,4 @@
-package com.gbhw.weatherapp.ui.main
+package com.gbhw.weatherapp.ui.main.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,27 +7,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.gbhw.weatherapp.R
-import com.gbhw.weatherapp.databinding.MainFragmentBinding
+import com.gbhw.weatherapp.databinding.FragmentHomeBinding
 import com.gbhw.weatherapp.model.AppState
 import com.gbhw.weatherapp.model.entities.Weather
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivityFragment : Fragment() {
+class FragmentHome : Fragment() {
 
     companion object {
-        fun newInstance() = MainActivityFragment()
+        fun newInstance() = FragmentHome()
     }
 
-    private val viewModel: MainViewModel by viewModel()
-    private var _binding: MainFragmentBinding? = null
+    private val viewModel: FragmentHomeViewModel by viewModel()
+    private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = MainFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -55,7 +55,7 @@ class MainActivityFragment : Fragment() {
                 progressBar.visibility = View.GONE
                 weatherGroup.visibility = View.INVISIBLE
                 Snackbar
-                    .make(mainView, "Error", Snackbar.LENGTH_INDEFINITE)
+                    .make(fragmentHome, "Error", Snackbar.LENGTH_INDEFINITE)
                     .setAction("Reload") { viewModel.getWeather() }
                     .show()
             }

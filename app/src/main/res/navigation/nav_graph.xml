@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragmentHome">
+    <fragment
+        android:id="@+id/fragmentHome"
+        android:name="com.gbhw.weatherapp.ui.main.home.FragmentHome"
+        android:label="FragmentHome" />
+    <fragment
+        android:id="@+id/fragmentFavourites"
+        android:name="com.gbhw.weatherapp.ui.main.favourites.FragmentFavourites"
+        android:label="FragmentFavourites" />
+    <fragment
+        android:id="@+id/fragmentCitiesList"
+        android:name="com.gbhw.weatherapp.ui.main.citiesList.FragmentCitiesList"
+        android:label="FragmentCitiesList" />
+</navigation>
