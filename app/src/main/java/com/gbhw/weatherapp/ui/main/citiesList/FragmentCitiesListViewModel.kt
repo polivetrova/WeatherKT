@@ -9,7 +9,7 @@ class FragmentCitiesListViewModel(private val repository: Repository) : ViewMode
     // брать список городов (апи/бд)
     // добавление в избранное из списка городов
 
-    val adapter = FavouritesRecyclerAdapter(repository.getCitiesList())
+//    val adapter = FavouritesRecyclerAdapter(repository.getCitiesList())
 
-//    fun getCitiesList() = repository.getCitiesList()
+    fun getCitiesList() = repository.getCitiesList()
 }

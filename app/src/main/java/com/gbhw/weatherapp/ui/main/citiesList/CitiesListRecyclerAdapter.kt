@@ -3,39 +3,57 @@ package com.gbhw.weatherapp.ui.main.citiesList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.gbhw.weatherapp.R
-import com.gbhw.weatherapp.model.entities.City
-import com.google.android.material.textview.MaterialTextView
+import com.gbhw.weatherapp.databinding.CityItemBinding
+import com.gbhw.weatherapp.model.entities.Weather
 
-class CitiesListRecyclerAdapter(private val citiesData: List<City>) :
+class CitiesListRecyclerAdapter(private val itemClickListener: FragmentCitiesList.OnItemViewClickListener) :
     RecyclerView.Adapter<CitiesListRecyclerAdapter.ViewHolder>() {
+
+    private lateinit var binding: CityItemBinding
+    private var weatherData: List<Weather> = listOf()
+
+    fun setWeather(data: List<Weather>) {
+        weatherData = data
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): CitiesListRecyclerAdapter.ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.city_item, parent, false)
-        return ViewHolder(view)
+        binding = CityItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return ViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: CitiesListRecyclerAdapter.ViewHolder, position: Int) {
-        val city: City = citiesData[position]
-        holder.bind(city)
+        holder.bind(weatherData[position])
+        holder.init()
     }
 
     override fun getItemCount(): Int {
-        return citiesData.size
+        return weatherData.size
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val cityName: MaterialTextView = itemView.findViewById(R.id.city_name)
-        private val countryName: MaterialTextView = itemView.findViewById(R.id.country_name)
 
-        fun bind(city: City) {
-            cityName.text = city.city
-            countryName.text = city.country
+        private val markAsFavouriteButton : AppCompatImageView = binding.markAsFavourite
+
+        fun init(){
+            markAsFavouriteButton.setOnClickListener {
+                markAsFavouriteButton.setImageResource(R.drawable.ic_star)
+            }
+        }
+
+        fun bind(weather: Weather) = with(binding) {
+            cityName.text = weather.city.city
+            countryName.text = weather.city.country
+            itemTemperature.text = weather.temperature.toString()
+            root.setOnClickListener { itemClickListener.onItemViewClick(weather) }
         }
     }
 }

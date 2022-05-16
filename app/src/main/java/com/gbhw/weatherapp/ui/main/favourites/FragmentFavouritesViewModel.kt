@@ -9,7 +9,7 @@ class FragmentFavouritesViewModel(private val repository: Repository) : ViewMode
     // отображение температуры в списке избранных городов
     // добавить onClickListener на itemView
 
-    val adapter = FavouritesRecyclerAdapter(repository.getCitiesList())
+//    val adapter = FavouritesRecyclerAdapter(repository.getCitiesList())
 
-//    fun getCitiesList() = repository.getCitiesList()
+    fun getCitiesList() = repository.getCitiesList()
 }

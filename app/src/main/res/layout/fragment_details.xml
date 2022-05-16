@@ -5,9 +5,21 @@
     android:id="@+id/fragmentHome"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/padding_general">
+    android:layout_marginStart="@dimen/padding_general"
+    android:layout_marginTop="@dimen/padding_general"
+    android:layout_marginEnd="@dimen/padding_general"
+    android:layout_marginBottom="?attr/actionBarSize">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/markAsFavourite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_star"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/cityName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,7 +31,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Москва" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/cityCoordinates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,7 +41,17 @@
         app:layout_constraintTop_toBottomOf="@+id/cityName"
         tools:text="lt/ln: 55.755826, 37.617299900000035" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/countryName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cityCoordinates"
+        tools:text="Russia" />
+
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/temperatureLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,9 +59,9 @@
         android:text="@string/temperature_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cityCoordinates" />
+        app:layout_constraintTop_toBottomOf="@+id/countryName" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/temperatureValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,7 +73,7 @@
         app:layout_constraintTop_toBottomOf="@+id/temperatureLabel"
         tools:text="+15" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/feelsLikeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,7 +83,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/temperatureValue" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/feelsLikeValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -89,7 +111,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
-        app:constraint_referenced_ids="cityName,cityCoordinates,temperatureLabel,temperatureValue,feelsLikeLabel,feelsLikeValue"
+        app:constraint_referenced_ids="cityName,cityCoordinates, countryName, temperatureLabel,temperatureValue,feelsLikeLabel,feelsLikeValue"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

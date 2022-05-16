@@ -4,7 +4,7 @@ import com.gbhw.weatherapp.model.entities.City
 import com.gbhw.weatherapp.model.entities.Weather
 
 interface Repository {
-    fun getCitiesList(): List<City>
+    fun getCitiesList(): List<Weather>
     fun getWeatherFromServer(): Weather
     fun getWeatherFromLocalStorage(): Weather
 

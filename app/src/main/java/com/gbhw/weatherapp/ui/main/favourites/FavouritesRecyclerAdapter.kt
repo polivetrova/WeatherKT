@@ -4,39 +4,41 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.gbhw.weatherapp.R
-import com.gbhw.weatherapp.model.entities.City
-import com.google.android.material.textview.MaterialTextView
+import com.gbhw.weatherapp.databinding.CityItemBinding
+import com.gbhw.weatherapp.model.entities.Weather
 
-class FavouritesRecyclerAdapter(private val citiesData: List<City>) :
+class FavouritesRecyclerAdapter(private val itemClickListener: FragmentFavourites.OnItemViewClickListener) :
     RecyclerView.Adapter<FavouritesRecyclerAdapter.ViewHolder>() {
+
+    private lateinit var binding: CityItemBinding
+    private var weatherData: List<Weather> = listOf()
+
+    fun setWeather(data: List<Weather>) {
+        weatherData = data
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ViewHolder {
-
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.city_item, parent, false)
-        return ViewHolder(view)
+    ): FavouritesRecyclerAdapter.ViewHolder {
+        binding = CityItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val city: City = citiesData[position]
-        holder.bind(city)
+        holder.bind(weatherData[position])
     }
 
     override fun getItemCount(): Int {
-        return citiesData.size
+        return weatherData.size
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val cityName: MaterialTextView = itemView.findViewById(R.id.city_name)
-        private val countryName: MaterialTextView = itemView.findViewById(R.id.country_name)
-
-        fun bind(city: City) {
-            cityName.text = city.city
-            countryName.text = city.country
+        fun bind(weather: Weather) = with(binding) {
+            cityName.text = weather.city.city
+            countryName.text = weather.city.country
+            root.setOnClickListener { itemClickListener.onItemViewClick(weather) }
         }
     }
 }
