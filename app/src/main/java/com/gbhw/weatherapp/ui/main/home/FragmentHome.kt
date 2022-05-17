@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.gbhw.weatherapp.R
-import com.gbhw.weatherapp.databinding.FragmentHomeBinding
+import com.gbhw.weatherapp.databinding.FragmentDetailsBinding
 import com.gbhw.weatherapp.model.AppState
 import com.gbhw.weatherapp.model.entities.Weather
 import com.google.android.material.snackbar.Snackbar
@@ -15,19 +15,21 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FragmentHome : Fragment() {
 
+    // геолокация???
+
     companion object {
         fun newInstance() = FragmentHome()
     }
 
     private val viewModel: FragmentHomeViewModel by viewModel()
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -69,6 +71,7 @@ class FragmentHome : Fragment() {
             weatherData.city.lat.toString(),
             weatherData.city.lon.toString()
         )
+        countryName.text = weatherData.city.country
         temperatureValue.text = weatherData.temperature.toString()
         feelsLikeValue.text = weatherData.feelsLike.toString()
 
