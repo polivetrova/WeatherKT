@@ -10,7 +10,7 @@ import com.gbhw.weatherapp.R
 import com.gbhw.weatherapp.databinding.FragmentDetailsBinding
 import com.gbhw.weatherapp.model.AppState
 import com.gbhw.weatherapp.model.entities.Weather
-import com.google.android.material.snackbar.Snackbar
+import com.gbhw.weatherapp.ui.main.showSnackBarWithAction
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FragmentHome : Fragment() {
@@ -56,10 +56,8 @@ class FragmentHome : Fragment() {
             is AppState.Error -> {
                 progressBar.visibility = View.GONE
                 weatherGroup.visibility = View.INVISIBLE
-                Snackbar
-                    .make(fragmentHome, "Error", Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Reload") { viewModel.getWeather() }
-                    .show()
+
+                view?.showSnackBarWithAction("Error", "Reload", { viewModel.getWeather() })
             }
         }
     }

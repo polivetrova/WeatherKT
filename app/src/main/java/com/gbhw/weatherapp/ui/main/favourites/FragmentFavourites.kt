@@ -33,7 +33,6 @@ class FragmentFavourites : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-            adapter?.setWeather(getWeatherDataSet())
             favouritesRoot.adapter = getAdapter()
         }
     }

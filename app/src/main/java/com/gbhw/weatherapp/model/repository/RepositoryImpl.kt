@@ -18,5 +18,4 @@ class RepositoryImpl : Repository {
 
     override fun removeCityFromFavourites(weather: Weather) =
         favourites.removeFromListOfFavourites(weather)
-
 }
