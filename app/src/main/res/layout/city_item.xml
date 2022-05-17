@@ -55,6 +55,6 @@
         android:id="@+id/list_item_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="city_name,country_name,item_temperature,markAsFavourite" />
+        app:constraint_referenced_ids="city_name,country_name,item_temperature" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

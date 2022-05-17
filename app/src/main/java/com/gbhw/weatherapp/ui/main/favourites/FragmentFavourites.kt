@@ -13,9 +13,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FragmentFavourites : Fragment() {
 
-    // по тапу открывается фрагмент с деталями, который используется в home
-    // в этот фрагмент можно добавить скрываемую кнопку, по которой город можно убрать из избранного
-
     companion object {
         fun newInstance() = FragmentFavourites()
     }

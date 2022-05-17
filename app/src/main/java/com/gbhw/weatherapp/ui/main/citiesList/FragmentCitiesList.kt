@@ -9,6 +9,8 @@ import com.gbhw.weatherapp.R
 import com.gbhw.weatherapp.databinding.FragmentCitiesListBinding
 import com.gbhw.weatherapp.model.entities.Weather
 import com.gbhw.weatherapp.ui.main.WeatherDetails
+import com.gbhw.weatherapp.ui.main.favourites.FragmentFavouritesViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FragmentCitiesList : Fragment() {
@@ -17,6 +19,7 @@ class FragmentCitiesList : Fragment() {
     }
 
     private val viewModel: FragmentCitiesListViewModel by viewModel()
+    private val favouritesViewModel by sharedViewModel<FragmentFavouritesViewModel>()
     private var _binding: FragmentCitiesListBinding? = null
     private val binding get() = _binding!!
     private var adapter: CitiesListRecyclerAdapter? = null
@@ -39,7 +42,7 @@ class FragmentCitiesList : Fragment() {
 
     private fun getAdapter(): CitiesListRecyclerAdapter {
         with(binding) {
-            adapter = CitiesListRecyclerAdapter(object : FragmentCitiesList.OnItemViewClickListener {
+            adapter = CitiesListRecyclerAdapter(object : OnItemViewClickListener {
                 override fun onItemViewClick(weather: Weather) {
                     val manager = activity?.supportFragmentManager
                     manager?.let { _ ->
@@ -50,6 +53,19 @@ class FragmentCitiesList : Fragment() {
                             .add(R.id.container, WeatherDetails.newInstance(bundle))
                             .addToBackStack("")
                             .commitAllowingStateLoss()
+                    }
+                }
+
+                override fun onFavouriteButtonClick(weather: Weather) {
+                    when (weather.isFavourite) {
+                        true -> {
+                            favouritesViewModel.addToFavourites(weather)
+                            weather.isFavourite = true
+                        }
+                        false -> {
+                            favouritesViewModel.removeFromFavourites(weather)
+                            weather.isFavourite = false
+                        }
                     }
                 }
             }).apply {
@@ -64,6 +80,7 @@ class FragmentCitiesList : Fragment() {
 
     interface OnItemViewClickListener {
         fun onItemViewClick(weather: Weather)
+        fun onFavouriteButtonClick(weather: Weather)
     }
 
     override fun onDestroyView() {

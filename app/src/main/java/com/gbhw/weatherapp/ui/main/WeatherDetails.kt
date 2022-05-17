@@ -5,14 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.gbhw.weatherapp.R
 import com.gbhw.weatherapp.databinding.FragmentDetailsBinding
 import com.gbhw.weatherapp.model.entities.Weather
+import com.gbhw.weatherapp.ui.main.favourites.FragmentFavouritesViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class WeatherDetails : Fragment() {
 
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
+    private val favouritesViewModel by sharedViewModel<FragmentFavouritesViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +29,36 @@ class WeatherDetails : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.getParcelable<Weather>(BUNDLE_EXTRA)?.let {
+            val weather: Weather? = arguments?.getParcelable(BUNDLE_EXTRA)
+
             with(binding) {
+                weatherGroup.visibility = View.VISIBLE
+
+                backArrow.visibility = View.VISIBLE
+                backArrow.setOnClickListener {
+                    parentFragmentManager.popBackStack("", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                }
+
+                if (weather!!.isFavourite) {
+                    markAsFavourite.visibility = View.VISIBLE
+
+                    // removing and re-adding the city to Favourites from inside of WeatherDetails
+                    markAsFavourite.setOnClickListener {
+                        when (weather.isFavourite) {
+                            true -> {
+                                markAsFavourite.setImageResource(R.drawable.ic_star_outline)
+                                weather.isFavourite = false
+                            }
+                            false -> {
+                                markAsFavourite.setImageResource(R.drawable.ic_star)
+                                weather.isFavourite = true
+                            }
+                        }
+                        if (!weather.isFavourite) {
+                            favouritesViewModel.removeFromFavourites(weather)
+                        }
+                    }
+                }
                 val city = it.city
                 cityName.text = city.city
                 cityCoordinates.text = String.format(

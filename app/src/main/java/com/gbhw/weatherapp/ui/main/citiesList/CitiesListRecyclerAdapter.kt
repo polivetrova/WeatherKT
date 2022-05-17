@@ -3,7 +3,6 @@ package com.gbhw.weatherapp.ui.main.citiesList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.gbhw.weatherapp.R
 import com.gbhw.weatherapp.databinding.CityItemBinding
@@ -32,7 +31,6 @@ class CitiesListRecyclerAdapter(private val itemClickListener: FragmentCitiesLis
 
     override fun onBindViewHolder(holder: CitiesListRecyclerAdapter.ViewHolder, position: Int) {
         holder.bind(weatherData[position])
-        holder.init()
     }
 
     override fun getItemCount(): Int {
@@ -41,19 +39,28 @@ class CitiesListRecyclerAdapter(private val itemClickListener: FragmentCitiesLis
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val markAsFavouriteButton : AppCompatImageView = binding.markAsFavourite
-
-        fun init(){
-            markAsFavouriteButton.setOnClickListener {
-                markAsFavouriteButton.setImageResource(R.drawable.ic_star)
-            }
-        }
-
         fun bind(weather: Weather) = with(binding) {
             cityName.text = weather.city.city
             countryName.text = weather.city.country
             itemTemperature.text = weather.temperature.toString()
-            root.setOnClickListener { itemClickListener.onItemViewClick(weather) }
+            if (weather.isFavourite) {
+                markAsFavourite.setImageResource(R.drawable.ic_star)
+            }
+
+            root.setOnClickListener {
+                itemClickListener.onItemViewClick(weather)
+            }
+
+            markAsFavourite.setOnClickListener {
+                if (weather.isFavourite) {
+                    weather.isFavourite = false
+                    markAsFavourite.setImageResource(R.drawable.ic_star_outline)
+                } else {
+                    weather.isFavourite = true
+                    markAsFavourite.setImageResource(R.drawable.ic_star)
+                }
+                itemClickListener.onFavouriteButtonClick(weather)
+            }
         }
     }
 }
