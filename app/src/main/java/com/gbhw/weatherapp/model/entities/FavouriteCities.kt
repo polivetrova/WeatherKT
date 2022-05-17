@@ -20,7 +20,9 @@ data class FavouriteCities(
     }
 
     override fun addToListOfFavourites(element: Weather) {
-        favouriteCitiesList.add(element)
+        if(!favouriteCitiesList.contains(element)) {
+            favouriteCitiesList.add(element)
+        }
     }
 }
 

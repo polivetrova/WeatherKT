@@ -58,14 +58,8 @@ class FragmentCitiesList : Fragment() {
 
                 override fun onFavouriteButtonClick(weather: Weather) {
                     when (weather.isFavourite) {
-                        true -> {
-                            favouritesViewModel.addToFavourites(weather)
-                            weather.isFavourite = true
-                        }
-                        false -> {
-                            favouritesViewModel.removeFromFavourites(weather)
-                            weather.isFavourite = false
-                        }
+                        true -> favouritesViewModel.addToFavourites(weather)
+                        false -> favouritesViewModel.removeFromFavourites(weather)
                     }
                 }
             }).apply {
