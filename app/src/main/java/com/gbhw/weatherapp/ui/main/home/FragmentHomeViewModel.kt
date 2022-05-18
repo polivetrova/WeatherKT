@@ -11,13 +11,20 @@ class FragmentHomeViewModel(private val repository: Repository) : ViewModel() {
     private val localLiveData = MutableLiveData<AppState>()
     val liveData: LiveData<AppState> get() = localLiveData
 
-    fun getWeather() = getDataFromLocalSource()
+    fun getWeather(lat: Double, lon: Double) = getDataFromLocalSource(lat, lon)
 
-    private fun getDataFromLocalSource() {
+    private fun getDataFromLocalSource(lat: Double, lon: Double) {
         localLiveData.value = AppState.Loading
         Thread {
-            sleep(1000)
-            localLiveData.postValue(AppState.Success(repository.getWeatherFromLocalStorage()))
+            val data = repository.getWeatherFromServer(lat, lon)
+            localLiveData.postValue(AppState.Success(listOf(data)))
         }.start()
+
+
+//        localLiveData.value = AppState.Loading
+//        Thread {
+//            sleep(1000)
+//            localLiveData.postValue(AppState.Success(repository.getWeatherFromLocalStorage()))
+//        }.start()
     }
 }

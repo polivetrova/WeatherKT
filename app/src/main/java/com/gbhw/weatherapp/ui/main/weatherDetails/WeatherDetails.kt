@@ -1,4 +1,4 @@
-package com.gbhw.weatherapp.ui.main
+package com.gbhw.weatherapp.ui.main.weatherDetails
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,14 +8,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.gbhw.weatherapp.R
 import com.gbhw.weatherapp.databinding.FragmentDetailsBinding
+import com.gbhw.weatherapp.model.AppState
 import com.gbhw.weatherapp.model.entities.Weather
 import com.gbhw.weatherapp.ui.main.favourites.FragmentFavouritesViewModel
+import com.gbhw.weatherapp.ui.main.showToast
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class WeatherDetails : Fragment() {
 
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
+    private val viewModel : WeatherDetailsViewModel by viewModel()
     private val favouritesViewModel by sharedViewModel<FragmentFavouritesViewModel>()
 
     override fun onCreateView(
@@ -75,9 +79,31 @@ class WeatherDetails : Fragment() {
                     temperatureValue.text = weather.temperature.toString()
                     feelsLikeValue.text = weather.feelsLike.toString()
                 }
+
+                viewModel.weatherLiveData.observe(viewLifecycleOwner) { appState ->
+                    when (appState){
+                        is AppState.Error -> {
+                            progressBar.visibility = View.GONE
+                            weatherGroup.visibility = View.INVISIBLE
+                            errorTV.visibility = View.VISIBLE
+                        }
+                         is AppState.Loading -> {
+                            weatherGroup.visibility = View.INVISIBLE
+                            progressBar.visibility = View.VISIBLE
+                        }
+                        is AppState.Success -> {
+                            progressBar.visibility = View.GONE
+                            weatherGroup.visibility = View.VISIBLE
+                            temperatureValue.text = appState.weatherData[0].temperature.toString()
+                            feelsLikeValue.text = appState.weatherData[0].feelsLike.toString()
+                            weatherCondition.text = appState.weatherData[0].condition
+                        }
+                    }
+
+                }
+                viewModel.loadData(weather.city.lat, weather.city.lon)
             }
         }
-
     }
 
     override fun onDestroyView() {

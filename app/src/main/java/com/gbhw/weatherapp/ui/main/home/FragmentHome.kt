@@ -10,6 +10,7 @@ import com.gbhw.weatherapp.R
 import com.gbhw.weatherapp.databinding.FragmentDetailsBinding
 import com.gbhw.weatherapp.model.AppState
 import com.gbhw.weatherapp.model.entities.Weather
+import com.gbhw.weatherapp.model.entities.getDefaultCity
 import com.gbhw.weatherapp.ui.main.showSnackBarWithAction
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -36,9 +37,10 @@ class FragmentHome : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         val observer = Observer<AppState> { renderData(it) }
         viewModel.liveData.observe(viewLifecycleOwner, observer)
-        viewModel.getWeather()
+        viewModel.getWeather(getDefaultCity().lat, getDefaultCity().lon)
     }
 
     private fun renderData(appState: AppState) = with(binding) {
@@ -57,21 +59,21 @@ class FragmentHome : Fragment() {
                 progressBar.visibility = View.GONE
                 weatherGroup.visibility = View.INVISIBLE
 
-                view?.showSnackBarWithAction("Error", "Reload", { viewModel.getWeather() })
+                view?.showSnackBarWithAction("Error", "Reload", { viewModel.getWeather(getDefaultCity().lat, getDefaultCity().lon) })
             }
         }
     }
 
-    private fun setData(weatherData: Weather) = with(binding) {
-        cityName.text = weatherData.city.city
+    private fun setData(weatherData: List<Weather>) = with(binding) {
+        cityName.text = weatherData[0].city.city
         cityCoordinates.text = String.format(
             getString(R.string.city_coordinates),
-            weatherData.city.lat.toString(),
-            weatherData.city.lon.toString()
+            weatherData[0].city.lat.toString(),
+            weatherData[0].city.lon.toString()
         )
-        countryName.text = weatherData.city.country
-        temperatureValue.text = weatherData.temperature.toString()
-        feelsLikeValue.text = weatherData.feelsLike.toString()
+        countryName.text = weatherData[0].city.country
+        temperatureValue.text = weatherData[0].temperature.toString()
+        feelsLikeValue.text = weatherData[0].feelsLike.toString()
 
     }
 
