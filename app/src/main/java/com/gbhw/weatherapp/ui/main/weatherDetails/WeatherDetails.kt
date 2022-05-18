@@ -11,6 +11,7 @@ import com.gbhw.weatherapp.databinding.FragmentDetailsBinding
 import com.gbhw.weatherapp.model.AppState
 import com.gbhw.weatherapp.model.entities.Weather
 import com.gbhw.weatherapp.ui.main.favourites.FragmentFavouritesViewModel
+import com.gbhw.weatherapp.ui.main.showSnackBarWithAction
 import com.gbhw.weatherapp.ui.main.showToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -19,7 +20,7 @@ class WeatherDetails : Fragment() {
 
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
-    private val viewModel : WeatherDetailsViewModel by viewModel()
+    private val viewModel: WeatherDetailsViewModel by viewModel()
     private val favouritesViewModel by sharedViewModel<FragmentFavouritesViewModel>()
 
     override fun onCreateView(
@@ -81,13 +82,16 @@ class WeatherDetails : Fragment() {
                 }
 
                 viewModel.weatherLiveData.observe(viewLifecycleOwner) { appState ->
-                    when (appState){
+                    when (appState) {
                         is AppState.Error -> {
                             progressBar.visibility = View.GONE
                             weatherGroup.visibility = View.INVISIBLE
-                            errorTV.visibility = View.VISIBLE
+                            view.showSnackBarWithAction(
+                                "Something went wrong!",
+                                "Reload",
+                                { viewModel.loadData(weather.city.lat, weather.city.lon) })
                         }
-                         is AppState.Loading -> {
+                        is AppState.Loading -> {
                             weatherGroup.visibility = View.INVISIBLE
                             progressBar.visibility = View.VISIBLE
                         }

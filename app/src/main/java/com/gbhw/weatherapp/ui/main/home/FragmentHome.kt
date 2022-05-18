@@ -37,7 +37,6 @@ class FragmentHome : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         val observer = Observer<AppState> { renderData(it) }
         viewModel.liveData.observe(viewLifecycleOwner, observer)
         viewModel.getWeather(getDefaultCity().lat, getDefaultCity().lon)
@@ -46,10 +45,9 @@ class FragmentHome : Fragment() {
     private fun renderData(appState: AppState) = with(binding) {
         when (appState) {
             is AppState.Success -> {
-                val weatherData = appState.weatherData
                 progressBar.visibility = View.GONE
                 weatherGroup.visibility = View.VISIBLE
-                setData(weatherData)
+                setData(appState.weatherData[0])
             }
             is AppState.Loading -> {
                 weatherGroup.visibility = View.INVISIBLE
@@ -59,22 +57,25 @@ class FragmentHome : Fragment() {
                 progressBar.visibility = View.GONE
                 weatherGroup.visibility = View.INVISIBLE
 
-                view?.showSnackBarWithAction("Error", "Reload", { viewModel.getWeather(getDefaultCity().lat, getDefaultCity().lon) })
+                view?.showSnackBarWithAction(
+                    "Error",
+                    "Reload",
+                    { viewModel.getWeather(getDefaultCity().lat, getDefaultCity().lon) })
             }
         }
     }
 
-    private fun setData(weatherData: List<Weather>) = with(binding) {
-        cityName.text = weatherData[0].city.city
+    private fun setData(weatherData: Weather) = with(binding) {
+        cityName.text = weatherData.city.city
         cityCoordinates.text = String.format(
             getString(R.string.city_coordinates),
-            weatherData[0].city.lat.toString(),
-            weatherData[0].city.lon.toString()
+            weatherData.city.lat.toString(),
+            weatherData.city.lon.toString()
         )
-        countryName.text = weatherData[0].city.country
-        temperatureValue.text = weatherData[0].temperature.toString()
-        feelsLikeValue.text = weatherData[0].feelsLike.toString()
-
+        countryName.text = weatherData.city.country
+        weatherCondition.text = weatherData.condition
+        temperatureValue.text = weatherData.temperature.toString()
+        feelsLikeValue.text = weatherData.feelsLike.toString()
     }
 
     override fun onDestroyView() {

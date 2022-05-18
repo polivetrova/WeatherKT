@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gbhw.weatherapp.R
 import com.gbhw.weatherapp.databinding.CityItemBinding
 import com.gbhw.weatherapp.model.entities.Weather
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+
 
 class CitiesListRecyclerAdapter(private val itemClickListener: FragmentCitiesList.OnItemViewClickListener) :
     RecyclerView.Adapter<CitiesListRecyclerAdapter.ViewHolder>() {
@@ -40,9 +42,10 @@ class CitiesListRecyclerAdapter(private val itemClickListener: FragmentCitiesLis
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(weather: Weather) = with(binding) {
+
             cityName.text = weather.city.city
             countryName.text = weather.city.country
-            itemTemperature.text = weather.temperature.toString()
+//            itemTemperature.text = weather.temperature.toString()
             if (weather.isFavourite) {
                 markAsFavourite.setImageResource(R.drawable.ic_star)
             }

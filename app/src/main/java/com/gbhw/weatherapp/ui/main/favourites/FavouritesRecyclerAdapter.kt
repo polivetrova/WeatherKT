@@ -38,7 +38,7 @@ class FavouritesRecyclerAdapter(private val itemClickListener: FragmentFavourite
         fun bind(weather: Weather) = with(binding) {
             cityName.text = weather.city.city
             countryName.text = weather.city.country
-            itemTemperature.text = weather.temperature.toString()
+//            itemTemperature.text = weather.temperature.toString()
             markAsFavourite.visibility = View.GONE
 
             root.setOnClickListener { itemClickListener.onItemViewClick(weather) }
