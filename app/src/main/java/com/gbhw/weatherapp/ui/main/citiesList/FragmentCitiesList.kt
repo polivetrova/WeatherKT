@@ -10,6 +10,7 @@ import com.gbhw.weatherapp.databinding.FragmentCitiesListBinding
 import com.gbhw.weatherapp.model.entities.Weather
 import com.gbhw.weatherapp.ui.main.WeatherDetails
 import com.gbhw.weatherapp.ui.main.favourites.FragmentFavouritesViewModel
+import com.gbhw.weatherapp.ui.main.showToast
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -58,8 +59,14 @@ class FragmentCitiesList : Fragment() {
 
                 override fun onFavouriteButtonClick(weather: Weather) {
                     when (weather.isFavourite) {
-                        true -> favouritesViewModel.addToFavourites(weather)
-                        false -> favouritesViewModel.removeFromFavourites(weather)
+                        true -> {
+                            favouritesViewModel.addToFavourites(weather)
+                            view?.showToast("Added to Favourites")
+                        }
+                        false -> {
+                            favouritesViewModel.removeFromFavourites(weather)
+                            view?.showToast("Removed from Favourites")
+                        }
                     }
                 }
             }).apply {

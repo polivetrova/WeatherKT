@@ -28,18 +28,20 @@ class WeatherDetails : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.getParcelable<Weather>(BUNDLE_EXTRA)?.let {
-            val weather: Weather? = arguments?.getParcelable(BUNDLE_EXTRA)
+        arguments?.getParcelable<Weather>(BUNDLE_EXTRA)?.let { weather ->
 
             with(binding) {
                 weatherGroup.visibility = View.VISIBLE
 
                 backArrow.visibility = View.VISIBLE
                 backArrow.setOnClickListener {
-                    parentFragmentManager.popBackStack("", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                    parentFragmentManager.popBackStack(
+                        "",
+                        FragmentManager.POP_BACK_STACK_INCLUSIVE
+                    )
                 }
 
-                if (weather!!.isFavourite) {
+                if (weather.isFavourite) {
                     markAsFavourite.visibility = View.VISIBLE
 
                     // removing and re-adding the city to Favourites from inside of WeatherDetails
@@ -47,30 +49,35 @@ class WeatherDetails : Fragment() {
                         when (weather.isFavourite) {
                             true -> {
                                 markAsFavourite.setImageResource(R.drawable.ic_star_outline)
+                                view.showToast("Removed from Favourites")
                                 weather.isFavourite = false
                             }
                             false -> {
                                 markAsFavourite.setImageResource(R.drawable.ic_star)
+                                view.showToast("Added to Favourites")
                                 weather.isFavourite = true
                             }
                         }
+
                         if (!weather.isFavourite) {
                             favouritesViewModel.removeFromFavourites(weather)
                         }
                     }
                 }
-                val city = it.city
-                cityName.text = city.city
-                cityCoordinates.text = String.format(
-                    getString(R.string.city_coordinates),
-                    city.lat.toString(),
-                    city.lon.toString()
-                )
-                countryName.text = city.country
-                temperatureValue.text = it.temperature.toString()
-                feelsLikeValue.text = it.feelsLike.toString()
+                weather.city.also { city ->
+                    cityName.text = city.city
+                    cityCoordinates.text = String.format(
+                        getString(R.string.city_coordinates),
+                        city.lat.toString(),
+                        city.lon.toString()
+                    )
+                    countryName.text = city.country
+                    temperatureValue.text = weather.temperature.toString()
+                    feelsLikeValue.text = weather.feelsLike.toString()
+                }
             }
         }
+
     }
 
     override fun onDestroyView() {
