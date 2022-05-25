@@ -29,8 +29,8 @@ const val DETAILS_RESPONSE_SUCCESS_EXTRA = "RESPONSE SUCCESS"
 const val DETAILS_TEMP_EXTRA = "TEMPERATURE"
 const val DETAILS_FEELS_LIKE_EXTRA = "FEELS LIKE"
 const val DETAILS_CONDITION_EXTRA = "CONDITION"
-private const val TEMP_INVALID = -100
-private const val FEELS_LIKE_INVALID = -100
+const val TEMP_INVALID = -100
+const val FEELS_LIKE_INVALID = -100
 
 class WeatherDetails : Fragment() {
 
@@ -133,10 +133,6 @@ class WeatherDetails : Fragment() {
                 }
             }
         }
-        val fact = weatherDTO.fact
-        val temp = fact.temp
-        val feelsLike = fact.feelsLike
-        val condition = fact.condition
 
         val city = weatherBundle.city
         binding.cityName.text = city.city
@@ -145,9 +141,9 @@ class WeatherDetails : Fragment() {
             city.lat.toString(),
             city.lon.toString()
         )
-        binding.temperatureValue.text = temp.toString()
-        binding.feelsLikeValue.text = feelsLike.toString()
-        binding.weatherCondition.text = condition
+        binding.temperatureValue.text = weatherDTO.fact.temp.toString()
+        binding.feelsLikeValue.text = weatherDTO.fact.feelsLike.toString()
+        binding.weatherCondition.text = weatherDTO.fact.condition
     }
 
     override fun onDestroyView() {

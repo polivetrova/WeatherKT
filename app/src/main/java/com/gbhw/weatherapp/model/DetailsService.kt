@@ -16,9 +16,6 @@ import javax.net.ssl.HttpsURLConnection
 
 const val LATITUDE_EXTRA = "Latitude"
 const val LONGITUDE_EXTRA = "Longitude"
-private const val REQUEST_GET = "GET"
-private const val REQUEST_TIMEOUT = 10000
-private const val REQUEST_API_KEY = "X-Yandex-API-Key"
 
 class DetailsService(name: String = "DetailService") : IntentService(name) {
 
@@ -26,6 +23,7 @@ class DetailsService(name: String = "DetailService") : IntentService(name) {
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onHandleIntent(intent: Intent?) {
+
         intent.let {
             val lat = it?.getDoubleExtra(LATITUDE_EXTRA, 0.0)
             val lon = it?.getDoubleExtra(LONGITUDE_EXTRA, 0.0)
@@ -36,18 +34,19 @@ class DetailsService(name: String = "DetailService") : IntentService(name) {
     @RequiresApi(Build.VERSION_CODES.N)
     private fun loadWeather(lat: String, lon: String) {
         val uri =
-            URL("https://api.weather.yandex.ru/v2/informers?lat=${lat}&lon=${lon}")
+            URL("https://api.weather.yandex.ru/v2/forecast?lat=${lat}&lon=${lon}")
         lateinit var urlConnection: HttpsURLConnection
         try {
             urlConnection = uri.openConnection() as HttpsURLConnection
             urlConnection.apply {
-                requestMethod = REQUEST_GET
-                readTimeout = REQUEST_TIMEOUT
+                requestMethod = "GET"
+                readTimeout = 10000
                 addRequestProperty(
-                    REQUEST_API_KEY,
-                    "48e22406-1228-4310-9452-cdb1c1151d04"
+                    "X-Yandex-API-Key",
+                    "adbdb5d7-8e0f-4433-af7e-b5d9f6c61a75"
                 )
             }
+
             val bufferedReader = BufferedReader(InputStreamReader(urlConnection.inputStream))
 
             val lines = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
