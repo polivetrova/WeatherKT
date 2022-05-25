@@ -23,6 +23,8 @@
             </intent-filter>
         </activity>
 
+        <service android:name=".model.DetailsService"/>
+
     </application>
 
 </manifest>

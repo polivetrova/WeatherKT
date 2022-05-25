@@ -39,7 +39,7 @@ class FragmentHome : Fragment() {
 
         val observer = Observer<AppState> { renderData(it) }
         viewModel.liveData.observe(viewLifecycleOwner, observer)
-        viewModel.getWeather(getDefaultCity().lat, getDefaultCity().lon)
+//        viewModel.getWeather(getDefaultCity().lat, getDefaultCity().lon)
     }
 
     private fun renderData(appState: AppState) = with(binding) {
@@ -57,10 +57,10 @@ class FragmentHome : Fragment() {
                 progressBar.visibility = View.GONE
                 weatherGroup.visibility = View.INVISIBLE
 
-                view?.showSnackBarWithAction(
-                    "Error",
-                    "Reload",
-                    { viewModel.getWeather(getDefaultCity().lat, getDefaultCity().lon) })
+//                view?.showSnackBarWithAction(
+//                    "Error",
+//                    "Reload",
+//                    { viewModel.getWeather(getDefaultCity().lat, getDefaultCity().lon) })
             }
         }
     }
