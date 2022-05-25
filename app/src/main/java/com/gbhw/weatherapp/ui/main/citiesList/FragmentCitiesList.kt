@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.gbhw.weatherapp.R
 import com.gbhw.weatherapp.databinding.FragmentCitiesListBinding
 import com.gbhw.weatherapp.model.entities.Weather
-import com.gbhw.weatherapp.ui.main.WeatherDetails
+import com.gbhw.weatherapp.ui.main.weatherDetails.WeatherDetails
 import com.gbhw.weatherapp.ui.main.favourites.FragmentFavouritesViewModel
 import com.gbhw.weatherapp.ui.main.showToast
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel

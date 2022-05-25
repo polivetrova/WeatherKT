@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">WeWeather</string>
-    <string name="temperature_label">Температура</string>
-    <string name="feels_like_label">Ощущается как</string>
+    <string name="temperature_label">Temperature</string>
+    <string name="feels_like_label">Feels like</string>
     <string name="city_coordinates">lt/ln: %s, %s"</string>
     <string name="text_label_1">Home</string>
     <string name="text_label_2">Favourites</string>
     <string name="text_label_3">Cities</string>
+    <string name="error_happened">Something went wrong :(</string>
 </resources>

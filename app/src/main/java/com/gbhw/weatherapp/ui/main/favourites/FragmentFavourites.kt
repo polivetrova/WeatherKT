@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.gbhw.weatherapp.R
 import com.gbhw.weatherapp.databinding.FragmentFavouritesBinding
 import com.gbhw.weatherapp.model.entities.Weather
-import com.gbhw.weatherapp.ui.main.WeatherDetails
+import com.gbhw.weatherapp.ui.main.weatherDetails.WeatherDetails
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FragmentFavourites : Fragment() {

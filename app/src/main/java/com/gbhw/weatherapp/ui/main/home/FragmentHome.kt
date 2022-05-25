@@ -10,6 +10,7 @@ import com.gbhw.weatherapp.R
 import com.gbhw.weatherapp.databinding.FragmentDetailsBinding
 import com.gbhw.weatherapp.model.AppState
 import com.gbhw.weatherapp.model.entities.Weather
+import com.gbhw.weatherapp.model.entities.getDefaultCity
 import com.gbhw.weatherapp.ui.main.showSnackBarWithAction
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -38,16 +39,15 @@ class FragmentHome : Fragment() {
 
         val observer = Observer<AppState> { renderData(it) }
         viewModel.liveData.observe(viewLifecycleOwner, observer)
-        viewModel.getWeather()
+        viewModel.getWeather(getDefaultCity().lat, getDefaultCity().lon)
     }
 
     private fun renderData(appState: AppState) = with(binding) {
         when (appState) {
             is AppState.Success -> {
-                val weatherData = appState.weatherData
                 progressBar.visibility = View.GONE
                 weatherGroup.visibility = View.VISIBLE
-                setData(weatherData)
+                setData(appState.weatherData[0])
             }
             is AppState.Loading -> {
                 weatherGroup.visibility = View.INVISIBLE
@@ -57,7 +57,10 @@ class FragmentHome : Fragment() {
                 progressBar.visibility = View.GONE
                 weatherGroup.visibility = View.INVISIBLE
 
-                view?.showSnackBarWithAction("Error", "Reload", { viewModel.getWeather() })
+                view?.showSnackBarWithAction(
+                    "Error",
+                    "Reload",
+                    { viewModel.getWeather(getDefaultCity().lat, getDefaultCity().lon) })
             }
         }
     }
@@ -70,9 +73,9 @@ class FragmentHome : Fragment() {
             weatherData.city.lon.toString()
         )
         countryName.text = weatherData.city.country
+        weatherCondition.text = weatherData.condition
         temperatureValue.text = weatherData.temperature.toString()
         feelsLikeValue.text = weatherData.feelsLike.toString()
-
     }
 
     override fun onDestroyView() {
