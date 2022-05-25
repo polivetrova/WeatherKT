@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import coil.load
 import com.gbhw.weatherapp.R
 import com.gbhw.weatherapp.databinding.FragmentDetailsBinding
 import com.gbhw.weatherapp.model.AppState
@@ -101,6 +102,9 @@ class WeatherDetails : Fragment() {
                             temperatureValue.text = appState.weatherData[0].temperature.toString()
                             feelsLikeValue.text = appState.weatherData[0].feelsLike.toString()
                             weatherCondition.text = appState.weatherData[0].condition
+                            imageView.load("https://cdn.pixabay.com/photo/2020/08/30/19/37/mosque-5530453_1280.png") {
+                                crossfade(true)
+                            }
                         }
                     }
 

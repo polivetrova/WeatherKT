@@ -1,4 +1,4 @@
-package com.gbhw.weatherapp.model.entities.restEntites
+package com.gbhw.weatherapp.model.entities.restEntities
 
 import com.google.gson.annotations.SerializedName
 

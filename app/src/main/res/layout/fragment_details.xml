@@ -28,6 +28,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/cityName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/back_arrow" />
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/cityName"
         android:layout_width="wrap_content"
@@ -37,7 +46,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView"
         tools:text="Москва" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -65,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:textSize="30dp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/countryName"
@@ -131,7 +140,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
-        app:constraint_referenced_ids="cityName,cityCoordinates, countryName, weatherCondition, temperatureLabel,temperatureValue,feelsLikeLabel,feelsLikeValue"
+        app:constraint_referenced_ids="imageView, cityName, cityCoordinates, countryName, weatherCondition, temperatureLabel, temperatureValue,feelsLikeLabel, feelsLikeValue"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

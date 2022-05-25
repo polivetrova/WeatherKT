@@ -1,16 +1,16 @@
 package com.gbhw.weatherapp.model.repository
 
-import com.gbhw.weatherapp.model.WeatherLoader
 import com.gbhw.weatherapp.model.entities.Weather
 import com.gbhw.weatherapp.model.entities.FavouriteCities
 import com.gbhw.weatherapp.model.entities.getWorldCities
+import com.gbhw.weatherapp.model.rest.WeatherRepo
 
 class RepositoryImpl : Repository {
 
     private val favourites = FavouriteCities()
 
     override fun getWeatherFromServer(lat: Double, lon: Double): Weather {
-        val dto = WeatherLoader.loadWeather(lat, lon)
+        val dto = WeatherRepo.api.getWeather(lat, lon).execute().body()
         return Weather(
             temperature = dto?.fact?.temp ?: 0,
             feelsLike = dto?.fact?.feelsLike ?: 0,

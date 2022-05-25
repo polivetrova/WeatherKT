@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import coil.load
 import com.gbhw.weatherapp.R
 import com.gbhw.weatherapp.databinding.FragmentDetailsBinding
 import com.gbhw.weatherapp.model.AppState
@@ -48,6 +49,10 @@ class FragmentHome : Fragment() {
                 progressBar.visibility = View.GONE
                 weatherGroup.visibility = View.VISIBLE
                 setData(appState.weatherData[0])
+
+                imageView.load("https://cdn.pixabay.com/photo/2020/08/30/19/37/mosque-5530453_1280.png") {
+                    crossfade(true)
+                }
             }
             is AppState.Loading -> {
                 weatherGroup.visibility = View.INVISIBLE
