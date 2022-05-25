@@ -12,7 +12,7 @@ import javax.net.ssl.HttpsURLConnection
 
 object WeatherLoader {
     fun loadWeather(lat: Double, lon: Double): WeatherDTO? {
-        val uri = URL("https://api.weather.yandex.ru/v2/forecast?lat=${lat}&lon=${lon}")
+        val uri = URL("https://api.weather.yandex.ru/v2/informers?lat=${lat}&lon=${lon}")
         lateinit var urlConnection: HttpsURLConnection
 
         return try {

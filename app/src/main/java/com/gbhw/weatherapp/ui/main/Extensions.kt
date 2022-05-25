@@ -20,17 +20,3 @@ fun View.showSnackBarWithAction(
 ) {
     Snackbar.make(this, text, length).setAction(actionText, action).show()
 }
-
-fun View.showSnackBar(
-    text: String,
-    length: Int = Snackbar.LENGTH_LONG
-) {
-    Snackbar.make(this, text, length).show()
-}
-
-fun View.showSnackBarWithResource(
-    @StringRes text: Int,
-    length: Int = Snackbar.LENGTH_INDEFINITE
-) {
-    Snackbar.make(this, text, length).show()
-}
