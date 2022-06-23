@@ -7,10 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import coil.load
+import coil.size.Scale
+import coil.transform.CircleCropTransformation
 import com.gbhw.weatherapp.R
 import com.gbhw.weatherapp.databinding.FragmentDetailsBinding
 import com.gbhw.weatherapp.model.AppState
 import com.gbhw.weatherapp.model.entities.Weather
+import com.gbhw.weatherapp.model.entities.WeatherPic
 import com.gbhw.weatherapp.ui.main.favourites.FragmentFavouritesViewModel
 import com.gbhw.weatherapp.ui.main.showSnackBarWithAction
 import com.gbhw.weatherapp.ui.main.showToast
@@ -102,12 +105,20 @@ class WeatherDetails : Fragment() {
                             temperatureValue.text = appState.weatherData[0].temperature.toString()
                             feelsLikeValue.text = appState.weatherData[0].feelsLike.toString()
                             weatherCondition.text = appState.weatherData[0].condition
-                            imageView.load("https://cdn.pixabay.com/photo/2020/08/30/19/37/mosque-5530453_1280.png") {
-                                crossfade(true)
+                            when (appState.weatherData[0].condition){
+                                "clear" -> imageView.load(WeatherPic.CLEAR.link)
+                                "partly-cloudy" -> imageView.load(WeatherPic.PARTLY_CLOUDY.link)
+                                "cloudy" -> imageView.load(WeatherPic.CLOUDY.link)
+                                "overcast" -> imageView.load(WeatherPic.OVERCAST.link)
+                                "drizzle", "light-rain", "rain"-> imageView.load(WeatherPic.RAIN.link)
+                                "moderate-rain", "heavy-rain", "continuous-heavy-rain", "showers" -> imageView.load(WeatherPic.HEAVY_RAIN.link)
+                                "wet-snow", "snow", "light-snow" -> imageView.load(WeatherPic.SNOW.link)
+                                "snow-showers" -> imageView.load(WeatherPic.HEAVY_SNOW.link)
+                                "hail" -> imageView.load(WeatherPic.HAIL.link)
+                                "thunderstorm", "thunderstorm-with-rain", "thunderstorm-with-hail" -> imageView.load(WeatherPic.THUNDERSTORM.link)
                             }
                         }
                     }
-
                 }
                 viewModel.loadData(weather.city.lat, weather.city.lon)
             }

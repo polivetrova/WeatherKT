@@ -50,7 +50,7 @@ class FragmentHome : Fragment() {
                 weatherGroup.visibility = View.VISIBLE
                 setData(appState.weatherData[0])
 
-                imageView.load("https://cdn.pixabay.com/photo/2020/08/30/19/37/mosque-5530453_1280.png") {
+                imageView.load("https://c.pxhere.com/photos/78/97/moscow_city_2017_russia_megalopolis_skyscraper_architecture_office_moscow-556202.jpg!d") {
                     crossfade(true)
                 }
             }
